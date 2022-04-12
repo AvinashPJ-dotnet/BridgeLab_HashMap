@@ -84,38 +84,24 @@ public class MyLinkedList<K> {
     }
 
     public void remove(INode removeNode) {
-        INode tempNode = head, prev = null;
-
+        INode tempNode = head;
         if (tempNode != null && tempNode == removeNode) {
             head = tempNode.getNext(); // Changed head
             return;
         }
-
-        while (tempNode != null && tempNode != removeNode) {
-            prev = tempNode;
+        while (tempNode != null && tempNode.getNext() != removeNode) {
             tempNode = tempNode.getNext();
         }
         if (tempNode == null)
             return;
-        if (tempNode.getNext() == null && tempNode == removeNode) {
-            prev.setNext(null);
-            tail = prev; // Changed tail
+        if (tempNode.getNext().getNext() == null) {
+            tempNode.setNext(null);
+            tail = tempNode; // tail changed
             return;
         }
-        prev.setNext(tempNode.getNext());
+        tempNode.setNext(tempNode.getNext().getNext());
     }
 
-    //    public int search(INode searchNode) {
-//        INode tempNode = head;
-//        int countPosition = 0;
-//        while (tempNode != null) {
-//            if (tempNode == searchNode)
-//                return countPosition;
-//            tempNode = tempNode.getNext();
-//            countPosition++;
-//        }
-//        return -1;
-//    }
     public INode search(K searchKey) {
         INode tempNode = head;
         while (tempNode != null) {
